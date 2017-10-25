@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<!-- saved from url=(0055)http://www.mazong1123.com/use-jersey-2.0-without-maven/ -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Use jersey 2.0 without maven – Jim Ma – A software developer.</title>
+
+        
+    
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+    
+    <meta name="description" content="The most annoying thing recently for me is, I have to setup maven as a premise for using Jersey 2.0. The official document of Jersey does not provide enough information for me to setup Jersey without maven installed. After hours investigating and searching on the internet, I finally make it to work.
+
+">
+    <meta property="og:description" content="The most annoying thing recently for me is, I have to setup maven as a premise for using Jersey 2.0. The official document of Jersey does not provide enough information for me to setup Jersey without maven installed. After hours investigating and searching on the internet, I finally make it to work.
+
+">
+    
+    <meta name="author" content="Jim Ma">
+
+    
+    <meta property="og:title" content="Use jersey 2.0 without maven">
+    <meta property="twitter:title" content="Use jersey 2.0 without maven">
+    
+
+    <!--[if lt IE 9]>
+      <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <link rel="stylesheet" type="text/css" href="./ReadMe_files/style.css">
+    <link rel="alternate" type="application/rss+xml" title="Jim Ma - A software developer." href="http://www.mazong1123.com/feed.xml">
+
+    <!-- Created with Jekyll Now - http://github.com/barryclark/jekyll-now -->
+  <script async="" src="./ReadMe_files/analytics.js.Download"></script><script type="text/javascript" async="" src="./ReadMe_files/embed.js.Download"></script></head>
+
+  <body>
+    <div class="wrapper-masthead">
+      <div class="container">
+        <header class="masthead clearfix">
+          <a href="http://www.mazong1123.com/" class="site-avatar"><img src="./ReadMe_files/4554154"></a>
+
+          <div class="site-info">
+            <h1 class="site-name"><a href="http://www.mazong1123.com/">Jim Ma</a></h1>
+            <p class="site-description">A software developer.</p>
+          </div>
+
+          <nav>
+            <a href="http://www.mazong1123.com/">Blog</a>
+            <a href="http://www.mazong1123.com/about">About</a>
+          </nav>
+        </header>
+      </div>
+    </div>
+
+    <div id="main" role="main" class="container">
+      <article class="post">
+  <h1>Use jersey 2.0 without maven</h1>
+
+  <div class="entry">
+    <p>The most annoying thing recently for me is, I have to setup maven as a premise for using Jersey 2.0. The official document of Jersey does not provide enough information for me to setup Jersey without maven installed. After hours investigating and searching on the internet, I finally make it to work.</p>
+
+<p>##Step 1: Prepare jersey jars
+First, you need to <a href="https://jersey.java.net/download.html">download all jars from the jersey site</a></p>
+
+<p>Please download the <strong>Jersey JAX-RS 2.0 RI bundle</strong> version.</p>
+
+<p>Now extract all the jars, copy them to your <strong>WebContent/WEB-INF/lib</strong> folder.</p>
+
+<p>##Step 2: Setup jersey in web.xml</p>
+
+<p>Open web.xml file under <strong>WebContent/WEB-INF/lib</strong> folder. If you don’t have the web.xml file, <strong>right click the project folder</strong> -&gt; <strong>Java EE Tools</strong> -&gt; <strong>Generate Deployment Descriptor Stub</strong></p>
+
+<p>In the web.xml, add following contents:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&lt;display-name&gt;Your Service&lt;/display-name&gt;
+  &lt;servlet&gt;
+    &lt;servlet-name&gt;Your Service&lt;/servlet-name&gt;
+    &lt;servlet-class&gt;org.glassfish.jersey.servlet.ServletContainer&lt;/servlet-class&gt;
+    &lt;init-param&gt;
+    &lt;param-name&gt;jersey.config.server.provider.packages&lt;/param-name&gt;
+    &lt;param-value&gt;com.yourpackage.yourservice&lt;/param-value&gt;
+    &lt;/init-param&gt;
+    &lt;load-on-startup&gt;1&lt;/load-on-startup&gt;
+&lt;/servlet&gt;
+&lt;servlet-mapping&gt;
+    &lt;servlet-name&gt;Your Service&lt;/servlet-name&gt;
+    &lt;url-pattern&gt;/service/*&lt;/url-pattern&gt;
+&lt;/servlet-mapping&gt;
+</code></pre>
+</div>
+
+<p><strong>IMPORTANT: The param-value inside <em>servlet</em> element MUST be exactly the same as the fully qualified name of the package contains jersey service classes</strong>. Otherwise a 404 not found error will be thrown at runtime.</p>
+
+<p>Now deploy your web project, visit http://yourhost/yourproject/service/xxx to access the RESTful service.</p>
+
+<p>That’s it.</p>
+
+  </div>
+
+  <div class="date">
+    Written on December 26, 2015
+  </div>
+
+  
+<div class="comments">
+	<div id="disqus_thread"></div>
+	<script type="text/javascript">
+
+	    var disqus_shortname = 'mazong1123';
+
+	    (function() {
+	        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+	        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+	        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+	    })();
+
+	</script>
+	<noscript>Please enable JavaScript to view the &lt;a href="http://disqus.com/?ref_noscript"&gt;comments powered by Disqus.&lt;/a&gt;</noscript>
+</div>
+
+</article>
+
+    </div>
+
+    <div class="wrapper-footer">
+      <div class="container">
+        <footer class="footer">
+          
+
+
+
+<a href="https://github.com/mazong1123"><i class="svg-icon github"></i></a>
+
+<a href="https://www.linkedin.com/profile/view?id=AAIAAAUPyBYBrLcFYH_pcElruzhd_1hHCInusvo"><i class="svg-icon linkedin"></i></a>
+
+
+
+
+
+
+
+        </footer>
+      </div>
+    </div>
+
+    
+
+        <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-65976970-2', 'auto');
+  ga('send', 'pageview');
+
+</script>
+  
+
+</body></html>
